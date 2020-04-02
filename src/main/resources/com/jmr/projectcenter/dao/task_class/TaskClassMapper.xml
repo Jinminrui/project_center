@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jmr.projectcenter.dao.task_class.TaskClassMapper">
+  <resultMap id="BaseResultMap" type="com.jmr.projectcenter.domain.entity.task_class.TaskClass">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="pk_id" jdbcType="VARCHAR" property="pkId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="project_id" jdbcType="VARCHAR" property="projectId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <resultMap id="TaskClassInfoMap" type="com.jmr.projectcenter.domain.dto.taskclass.TaskClassInfoDTO">
+    <id column="pk_id" jdbcType="VARCHAR" property="pkId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="task_num" jdbcType="INTEGER" property="taskNum" />
+  </resultMap>
+
+  <select id="getTaskClassInfo" resultMap="TaskClassInfoMap">
+    select task_class.pk_id, task_class.name, task_class.description, count(t.pk_id) as task_num
+    from task t right join task_class
+    on task_class.pk_id = t.task_class
+    where task_class.type =#{type}
+    and task_class.project_id=#{projectId}
+    group by task_class.pk_id
+    order by task_class.create_time asc
+  </select>
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jmr.projectcenter.dao.task.TaskMapper">
+  <resultMap id="BaseResultMap" type="com.jmr.projectcenter.domain.entity.task.Task">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="pk_Id" jdbcType="VARCHAR" property="pkId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="stage" jdbcType="VARCHAR" property="stage" />
+    <result column="start_time" jdbcType="DATE" property="startTime" />
+    <result column="end_time" jdbcType="DATE" property="endTime" />
+    <result column="project_id" jdbcType="VARCHAR" property="projectId" />
+    <result column="executor" jdbcType="VARCHAR" property="executor" />
+    <result column="story_points" jdbcType="INTEGER" property="storyPoints" />
+    <result column="priority" jdbcType="INTEGER" property="priority" />
+    <result column="sprint" jdbcType="VARCHAR" property="sprint" />
+    <result column="task_class" jdbcType="VARCHAR" property="taskClass" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="creator_id" jdbcType="VARCHAR" property="creatorId" />
+  </resultMap>
+</mapper>
