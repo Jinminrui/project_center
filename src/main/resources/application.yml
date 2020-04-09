@@ -51,4 +51,5 @@ feign:
           - com.jmr.projectcenter.feignclient.interceptor.TokenRelayRequestInteceptor
 logging:
   level:
-    com.jmr.docscenter.feignclient.UserCenterFeignClient: debug
+    com.jmr.projectcenter.feignclient.UserCenterFeignClient: debug
+    com.jmr.projectcenter.dao: debug

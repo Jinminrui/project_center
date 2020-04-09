@@ -29,9 +29,9 @@ public class Project {
 
     /**
      * 项目状态
-1-进度正常
-2-存在风险
-3-进度失控
+        1-进度正常
+        2-存在风险
+        3-进度失控
      */
     private Integer status;
 

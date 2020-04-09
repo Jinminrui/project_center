@@ -5,12 +5,11 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
-@Builder
 @Data
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "task")
 public class Task {
     @Id
@@ -89,4 +88,7 @@ public class Task {
 
     @Column(name = "creator_id")
     private String creatorId;
+
+    @Column(name = "finish_time")
+    private Date finishTime;
 }

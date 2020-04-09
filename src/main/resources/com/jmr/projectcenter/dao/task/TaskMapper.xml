@@ -21,5 +21,21 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="creator_id" jdbcType="VARCHAR" property="creatorId" />
+    <result column="finish_time" jdbcType="TIMESTAMP" property="finishTime" />
   </resultMap>
+
+  <resultMap id="AnalyseTaskByExecutorMap" type="com.jmr.projectcenter.domain.dto.task.AnalyseTaskByExecutorDTO">
+    <result column="executor" jdbcType="VARCHAR" property="executor" />
+    <result column="task_num" jdbcType="INTEGER" property="taskNum" />
+  </resultMap>
+
+  <select id="analyseTaskByExecutor" resultMap="AnalyseTaskByExecutorMap" parameterType="java.lang.String">
+    select executor, count(*) as task_num
+    from task
+    where project_id=#{projectId}
+    <if test="stage!=null">
+      and stage=#{stage}
+    </if>
+    group by executor
+  </select>
 </mapper>

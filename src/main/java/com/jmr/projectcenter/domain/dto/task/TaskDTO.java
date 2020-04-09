@@ -3,6 +3,7 @@ package com.jmr.projectcenter.domain.dto.task;
 import com.jmr.projectcenter.domain.dto.project.ProjectDTO;
 import com.jmr.projectcenter.domain.dto.user.User;
 import com.jmr.projectcenter.domain.entity.project.Project;
+import com.jmr.projectcenter.domain.entity.sprint.Sprint;
 import com.jmr.projectcenter.domain.entity.task_class.TaskClass;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -81,6 +82,8 @@ public class TaskDTO {
 
     private String creatorId;
 
+    private Date finishTime;
+
     private User executorInfo;
 
     private User creatorInfo;
@@ -88,4 +91,6 @@ public class TaskDTO {
     private TaskClass taskClassDetail;
 
     private ProjectDTO projectDetail;
+
+    private Sprint sprintDetail;
 }
