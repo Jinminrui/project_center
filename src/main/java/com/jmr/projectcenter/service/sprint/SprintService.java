@@ -52,4 +52,17 @@ public class SprintService {
         sprint.setUpdateTime(new Date());
         return sprintMapper.updateByPrimaryKeySelective(sprint);
     }
+
+    public int start(Sprint sprint) {
+        sprint.setStatus(2);
+        return sprintMapper.updateByPrimaryKeySelective(sprint);
+    }
+
+    public int complete(String id) {
+        if(sprintMapper.getUnDoneTaskNum(id) != 0) {
+            return 2;
+        }
+        Sprint sprint = Sprint.builder().pkId(id).status(3).build();
+        return sprintMapper.updateByPrimaryKeySelective(sprint);
+    }
 }

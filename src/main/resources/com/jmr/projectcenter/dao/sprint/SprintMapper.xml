@@ -35,10 +35,16 @@
   <select id="getSprintDetailList" resultMap="SprintDetailMap">
     select sprint.*,
        count(*) as all_task,
-       count(if(stage = '已完成' || stage = '关闭', true, null)) as done_task
+       count(if(stage = '已完成' || stage = '关闭' || stage = '已解决' || stage = '已拒绝', true, null)) as done_task
     from sprint
     left join task t on sprint.pk_id = t.sprint
     where sprint.project_id = #{projectId}
     group by sprint.pk_id
+  </select>
+
+  <select id="getUnDoneTaskNum" resultType="java.lang.Integer">
+    select count(if(stage != '已解决' &amp;&amp; stage != '已拒绝' &amp;&amp; stage != '关闭' &amp;&amp; stage != '已完成', true, null))
+    from task
+    where sprint = #{sprint}
   </select>
 </mapper>

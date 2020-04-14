@@ -2,7 +2,9 @@ package com.jmr.projectcenter.service.task;
 
 import com.jmr.projectcenter.dao.task.TaskMapper;
 import com.jmr.projectcenter.domain.dto.task.AnalyseTaskByExecutorDTO;
+import com.jmr.projectcenter.domain.dto.task.BugAccumulativeTrend;
 import com.jmr.projectcenter.domain.entity.task.Task;
+import com.jmr.projectcenter.utils.DateOperator;
 import com.jmr.projectcenter.utils.UUIDOperator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -37,7 +41,10 @@ public class TaskService {
 
     public int update(Task task) {
         if (task.getStage() != null) {
-            if (task.getStage().equals("已完成")) {
+            if (task.getStage().equals("已完成") ||
+                    task.getStage().equals("关闭") ||
+                    task.getStage().equals("已解决")  ||
+                    task.getStage().equals("已拒绝")) {
                 task.setFinishTime(new Date());
             } else {
                 task.setFinishTime(null);
@@ -119,11 +126,27 @@ public class TaskService {
      * @return
      */
     public int countFinishedTaskByMember(String projectId,String executorId) {
-        Example example = new Example(Task.class);
-        Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("projectId",projectId);
-        criteria.andEqualTo("executor",executorId);
-        criteria.andEqualTo("stage", "已完成");
-        return taskMapper.selectCountByExample(example);
+        return taskMapper.countFinishedTaskByMember(projectId,executorId);
+    }
+
+    /**
+     * 统计bug新增和修复趋势
+     * @param projectId
+     * @param sprintId
+     * @param interval
+     * @return
+     */
+    public List<BugAccumulativeTrend> analyseBugAccumulativeTrend(String projectId, String sprintId, Integer interval) {
+        List<String> dates = DateOperator.getIntervalDates(interval);
+        List<BugAccumulativeTrend> result = new ArrayList<>();
+        for(String date : dates) {
+            Integer newBug =  taskMapper.getNewBugNum(projectId, sprintId, date);
+            Integer fixedBug = taskMapper.getFixedBugNum(projectId, sprintId, dates.get(interval - 1), date);
+            BugAccumulativeTrend newBugItem = new BugAccumulativeTrend(date, "累计新增缺陷", newBug);
+            BugAccumulativeTrend fixedBugItem = new BugAccumulativeTrend(date, "累计修复缺陷", fixedBug);
+            result.add(newBugItem);
+            result.add(fixedBugItem);
+        }
+       return result;
     }
 }

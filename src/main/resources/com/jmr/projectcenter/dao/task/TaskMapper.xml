@@ -38,4 +38,41 @@
     </if>
     group by executor
   </select>
+  
+  <select id="countFinishedTaskByMember" resultType="java.lang.Integer">
+    select
+       count(if(stage = '已解决' || stage = '已拒绝' || stage = '关闭' || stage = '已完成', true, null))
+    from task
+    where project_id=#{projectId}
+    and executor=#{executor}
+  </select>
+
+  <resultMap id="BugAccumulativeTrendMap" type="com.jmr.projectcenter.domain.dto.task.BugAccumulativeTrend">
+    <result column="new_bug" jdbcType="INTEGER" property="newBug" />
+    <result column="fixed_bug" jdbcType="INTEGER" property="fixedBug" />
+  </resultMap>
+
+  <select id="getNewBugNum" resultType="java.lang.Integer">
+    select
+       count(*)
+    from task
+    where project_id = #{projectId}
+    <if test="sprintId!=null">
+      and sprint = #{sprintId}
+    </if>
+      and type = 2
+      and Date(create_time) &lt;= #{relativeTime}
+  </select>
+
+  <select id="getFixedBugNum" resultType="java.lang.Integer">
+    select
+       count(if(stage = '已解决' || stage = '已拒绝' || stage = '关闭', true, null))
+    from task
+    where project_id = #{projectId}
+    <if test="sprintId!=null">
+      and sprint = #{sprintId}
+    </if>
+      and type = 2
+      and Date(finish_time) between #{startTime} and #{relativeTime}
+  </select>
 </mapper>

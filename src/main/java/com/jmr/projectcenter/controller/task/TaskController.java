@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.jmr.projectcenter.auth.CheckLogin;
 import com.jmr.projectcenter.domain.dto.CommonResponseDTO;
 import com.jmr.projectcenter.domain.dto.task.AnalyseTaskByExecutorDTO;
+import com.jmr.projectcenter.domain.dto.task.BugAccumulativeTrend;
 import com.jmr.projectcenter.domain.dto.task.TaskDTO;
 import com.jmr.projectcenter.domain.dto.user.User;
 import com.jmr.projectcenter.domain.entity.task.Task;
@@ -95,6 +96,7 @@ public class TaskController {
         return CommonResponseDTO.builder().code(500).desc("删除失败").build();
     }
 
+    @CheckLogin
     @GetMapping("/list")
     public CommonResponseDTO<List<TaskDTO>> list(
             @RequestParam(value = "userId") String userId,
@@ -140,6 +142,7 @@ public class TaskController {
         return CommonResponseDTO.<List<TaskDTO>>builder().code(200).data(taskDTOList).desc("success").build();
     }
 
+    @CheckLogin
     @GetMapping("/analyseTaskByExecutor")
     public CommonResponseDTO<List<AnalyseTaskByExecutorDTO>> analyseTaskByExecutor(
             @RequestParam(value = "projectId") String projectId,
@@ -170,6 +173,19 @@ public class TaskController {
             list.add(analyseTaskByExecutorDTO);
         }
         return CommonResponseDTO.<List<AnalyseTaskByExecutorDTO>>builder().code(200).data(list).desc("success").build();
+    }
+
+    @CheckLogin
+    @GetMapping("/analyseBugAccumulativeTrend")
+    public CommonResponseDTO<List<BugAccumulativeTrend>> analyseBugAccumulativeTrend (
+            @RequestParam(value = "projectId") String projectId,
+            @RequestParam(value = "sprintId", required = false) String sprintId,
+            @RequestParam(value = "interval") Integer interval) {
+        List<BugAccumulativeTrend> result = taskService.analyseBugAccumulativeTrend(projectId, sprintId, interval);
+        return CommonResponseDTO.<List<BugAccumulativeTrend>>builder()
+                .code(200)
+                .data(result)
+                .build();
     }
 
 }

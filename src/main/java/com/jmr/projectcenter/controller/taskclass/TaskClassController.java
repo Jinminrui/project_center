@@ -1,5 +1,6 @@
 package com.jmr.projectcenter.controller.taskclass;
 
+import com.jmr.projectcenter.auth.CheckLogin;
 import com.jmr.projectcenter.domain.dto.CommonResponseDTO;
 import com.jmr.projectcenter.domain.dto.taskclass.TaskClassInfoDTO;
 import com.jmr.projectcenter.domain.entity.task_class.TaskClass;
@@ -21,6 +22,7 @@ public class TaskClassController {
     private final TaskClassService taskClassService;
     private final TaskService taskService;
 
+    @CheckLogin
     @PostMapping("/create")
     public CommonResponseDTO<Object> create(@RequestBody TaskClass taskClass) {
         int result = taskClassService.create(taskClass);
@@ -30,6 +32,7 @@ public class TaskClassController {
         return CommonResponseDTO.builder().code(500).desc("创建失败").build();
     }
 
+    @CheckLogin
     @PostMapping("/delete/{id}")
     public CommonResponseDTO<Object> delete(@PathVariable String id) {
         // 删除类别
@@ -43,6 +46,7 @@ public class TaskClassController {
         return CommonResponseDTO.builder().code(500).desc("删除失败").build();
     }
 
+    @CheckLogin
     @PostMapping("/update")
     public CommonResponseDTO<Object> update(@RequestBody TaskClass taskClass) {
         int result = taskClassService.update(taskClass);
@@ -52,6 +56,7 @@ public class TaskClassController {
         return CommonResponseDTO.builder().code(500).desc("修改失败").build();
     }
 
+    @CheckLogin
     @GetMapping("/list/{projectId}/{type}")
     public CommonResponseDTO<HashMap<String, Object>> getClassList(@PathVariable String projectId, @PathVariable Integer type){
         List<TaskClassInfoDTO> list = taskClassService.getClassList(type, projectId);

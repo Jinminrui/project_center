@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface SprintMapper extends Mapper<Sprint> {
     List<SprintDTO> getSprintDetailList(@Param(value = "projectId") String projectId);
+
+    Integer getUnDoneTaskNum(@Param(value = "sprint") String sprint);
 }
