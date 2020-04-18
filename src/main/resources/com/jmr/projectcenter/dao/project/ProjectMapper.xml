@@ -36,7 +36,7 @@
     left join project p
     on user_project_relation.project_id = p.pk_id
     where user_project_relation.user_id = #{userId}
-    order by create_time desc
+    order by create_time asc
   </select>
 
   <select id="findById" resultMap="ListItemMap">

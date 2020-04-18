@@ -2,10 +2,7 @@ package com.jmr.projectcenter.controller.project;
 
 import com.jmr.projectcenter.auth.CheckLogin;
 import com.jmr.projectcenter.domain.dto.CommonResponseDTO;
-import com.jmr.projectcenter.domain.dto.project.CreateProjectRequestDTO;
-import com.jmr.projectcenter.domain.dto.project.InviteProjectDTO;
-import com.jmr.projectcenter.domain.dto.project.ProjectDTO;
-import com.jmr.projectcenter.domain.dto.project.ProjectMemberDTO;
+import com.jmr.projectcenter.domain.dto.project.*;
 import com.jmr.projectcenter.domain.dto.user.User;
 import com.jmr.projectcenter.domain.entity.project.Project;
 import com.jmr.projectcenter.domain.entity.user_project_relation.UserProjectRelation;
@@ -32,9 +29,9 @@ public class ProjectController {
     private final UserService userService;
 
     @CheckLogin
-    @PostMapping("/delete/{id}")
-    public CommonResponseDTO<Object> delete(@PathVariable String id) {
-        int result = projectService.delete(id);
+    @PostMapping("/delete")
+    public CommonResponseDTO<Object> delete(@RequestBody DeleteProjectRequestDTO deleteProjectRequestDTO) {
+        int result = projectService.delete(deleteProjectRequestDTO);
         if(result == 1) {
             return CommonResponseDTO.builder().code(200).desc("删除成功").build();
         }

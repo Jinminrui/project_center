@@ -1,7 +1,6 @@
 package com.jmr.projectcenter.service.sprint;
 
 import com.jmr.projectcenter.dao.sprint.SprintMapper;
-import com.jmr.projectcenter.dao.task.TaskMapper;
 import com.jmr.projectcenter.domain.dto.sprint.SprintDTO;
 import com.jmr.projectcenter.domain.entity.sprint.Sprint;
 import com.jmr.projectcenter.service.task.TaskService;

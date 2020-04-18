@@ -83,6 +83,8 @@ public class TaskService {
         criteria.andEqualTo("sprint", sprint);
         if (stage != null && stage.equals("todo")) {
             criteria.andNotEqualTo("stage", "已完成");
+            criteria.andNotEqualTo("stage", "已解决");
+            criteria.andNotEqualTo("stage", "已拒绝");
             criteria.andNotEqualTo("stage", "关闭");
         } else {
             criteria.andEqualTo("stage", stage);
