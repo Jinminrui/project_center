@@ -25,6 +25,7 @@ public class ActivityService {
         if(projectId != null) {
             criteria.andEqualTo("projectId", projectId);
         }
+        example.setOrderByClause("create_time desc");
         return activityMapper.selectByExample(example);
     }
 }

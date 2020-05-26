@@ -38,6 +38,7 @@ public class ProjectController {
         return CommonResponseDTO.builder().code(500).desc("删除失败").build();
     }
 
+    @CheckLogin
     @PostMapping("/update")
     public CommonResponseDTO<Object> update(@RequestBody Project project) {
         int result = projectService.update(project);

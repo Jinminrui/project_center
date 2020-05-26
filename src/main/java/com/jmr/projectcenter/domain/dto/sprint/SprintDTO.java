@@ -22,6 +22,10 @@ public class SprintDTO {
      */
     private String projectId;
 
+    private String creatorId;
+
+    private String teamId;
+
     /**
      * 标题
      */

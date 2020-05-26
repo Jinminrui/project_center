@@ -33,17 +33,15 @@ public class AddActivityListener implements MessageListener {
     public Action consume(Message message, ConsumeContext consumeContext) {
         try {
             byte[] body = message.getBody();
-            String msg = new String(body);//获取到接收的消息，由于接收到的是byte数组，所以需要转换成字符串
-
-            //TODO 业务逻辑，自行设计
+            String msg = new String(body);
+            // TODO 业务逻辑
             log.info(msg);
             Activity activity = JSON.toJavaObject(JSON.parseObject(msg), Activity.class);
             activityMapper.insertSelective(activity);
-
         } catch (Exception e) {
            e.printStackTrace();
         }
-        //如果想测试消息重投的功能,可以将Action.CommitMessage 替换成Action.ReconsumeLater
+
         return Action.CommitMessage;
     }
 }

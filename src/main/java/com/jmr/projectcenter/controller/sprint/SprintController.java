@@ -92,4 +92,13 @@ public class SprintController {
         }
         return CommonResponseDTO.builder().code(500).desc("无法结束迭代").build();
     }
+
+    @CheckLogin
+    @GetMapping("/list/finished")
+    public CommonResponseDTO<List<Sprint>> getFinishedSprints(@RequestParam(value = "projectId") String projectId){
+        List<Sprint> sprints = sprintService.getFinishedSprints(projectId);
+        return CommonResponseDTO.<List<Sprint>>builder()
+                .code(200)
+                .data(sprints).build();
+    }
 }

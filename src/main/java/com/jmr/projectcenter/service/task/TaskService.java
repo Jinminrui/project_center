@@ -3,6 +3,8 @@ package com.jmr.projectcenter.service.task;
 import com.jmr.projectcenter.dao.task.TaskMapper;
 import com.jmr.projectcenter.domain.dto.task.AnalyseTaskByExecutorDTO;
 import com.jmr.projectcenter.domain.dto.task.BugAccumulativeTrend;
+import com.jmr.projectcenter.domain.dto.task.BurnDownDTO;
+import com.jmr.projectcenter.domain.entity.sprint.Sprint;
 import com.jmr.projectcenter.domain.entity.task.Task;
 import com.jmr.projectcenter.utils.DateOperator;
 import com.jmr.projectcenter.utils.UUIDOperator;
@@ -12,9 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -89,7 +91,7 @@ public class TaskService {
         } else {
             criteria.andEqualTo("stage", stage);
         }
-        example.setOrderByClause("update_time desc");
+        example.setOrderByClause("priority desc");
         return taskMapper.selectByExample(example);
     }
 
@@ -150,5 +152,38 @@ public class TaskService {
             result.add(fixedBugItem);
         }
        return result;
+    }
+
+    public List<BurnDownDTO> analyseBurnDown(Sprint sprint) throws ParseException {
+        List<String> dates = DateOperator.getDayBetweenDates(
+                DateOperator.parseDate(sprint.getStartTime()),
+                DateOperator.parseDate(sprint.getEndTime()));
+        Integer allStoryPoints = taskMapper.getAllStoryPoints(sprint.getPkId());
+        List<BurnDownDTO> result = new ArrayList<>();
+
+        float interval = allStoryPoints.floatValue() / dates.size();
+
+        for(String date : dates) {
+            Integer finishedStoryPoints =  taskMapper.getFinishedStoryPoints(sprint.getPkId(),date);
+            BurnDownDTO truthData = BurnDownDTO.builder()
+                    .date(date)
+                    .type("实际剩余Story Points")
+                    .value(allStoryPoints - finishedStoryPoints)
+                    .build();
+            result.add(truthData);
+
+            int gap = DateOperator.getGapDays(DateOperator.parseString(date), DateOperator.parseString(dates.get(0)));
+
+            float value = allStoryPoints - interval * gap;
+
+            BurnDownDTO dreamData = BurnDownDTO.builder()
+                    .date(date)
+                    .type("理想剩余Story Points")
+                    .value((int) value)
+                    .build();
+            result.add(dreamData);
+
+        }
+        return result;
     }
 }

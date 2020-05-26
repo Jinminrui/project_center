@@ -38,7 +38,7 @@ public class RocketMQProducerService {
         try {
             SendResult sendResult = rocketMQProducer.getProducer().send(message);
             if (sendResult != null) {
-                log.info(new Date() + " Send mq message success. Topic is:" + message.getTopic() + " msgId is: " + sendResult.getMessageId());
+                log.info(new Date() + " Send mq message success. Topic is:" + message.getTopic());
             } else {
                 log.warn(".sendResult is null.........");
             }

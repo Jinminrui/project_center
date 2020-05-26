@@ -18,7 +18,6 @@ import java.util.Map;
 public class JwtOperator {
     /**
      * 秘钥
-     * - 默认t1e2a3m4w5o6or7k8
      */
     @Value("${secret:aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrsssttt}")
     private String secret;

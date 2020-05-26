@@ -7,6 +7,8 @@
     -->
     <id column="pk_id" jdbcType="VARCHAR" property="pkId" />
     <result column="project_id" jdbcType="VARCHAR" property="projectId" />
+    <result column="creator_id" jdbcType="VARCHAR" property="creatorId" />
+    <result column="team_id" jdbcType="VARCHAR" property="teamId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="director" jdbcType="VARCHAR" property="director" />
@@ -20,6 +22,8 @@
   <resultMap id="SprintDetailMap" type="com.jmr.projectcenter.domain.dto.sprint.SprintDTO">
     <id column="pk_id" jdbcType="VARCHAR" property="pkId" />
     <result column="project_id" jdbcType="VARCHAR" property="projectId" />
+    <result column="creator_id" jdbcType="VARCHAR" property="creatorId" />
+    <result column="team_id" jdbcType="VARCHAR" property="teamId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="director" jdbcType="VARCHAR" property="director" />

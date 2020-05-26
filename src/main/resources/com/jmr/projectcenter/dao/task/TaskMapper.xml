@@ -75,4 +75,15 @@
       and type = 2
       and Date(finish_time) between #{startTime} and #{relativeTime}
   </select>
+
+  <select id="getAllStoryPoints" resultType="java.lang.Integer">
+    select coalesce(sum(story_points),0) from task
+    where sprint = #{sprint}
+  </select>
+
+  <select id="getFinishedStoryPoints" resultType="java.lang.Integer">
+    select coalesce(sum(story_points),0) from task
+    where sprint = #{sprint}
+    and Date(finish_time) &lt;= #{finishTime}
+  </select>
 </mapper>

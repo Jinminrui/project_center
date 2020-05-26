@@ -63,11 +63,14 @@ feign:
 logging:
   level:
     com.jmr.projectcenter.feignclient.UserCenterFeignClient: debug
+#    com.jmr.projectcenter.dao: debug
 
 rocketmq:
   producerId: GID-ActivityProducer
   consumerId: GID-ActivityConsumer
-  msgTopic: add-activity #生产主题，替换成自己的
-  accessKey: LTAI4Fsk3ufKP5w3LN61QHhp  #连接通道，替换成自己的
-  secretKey: zAGppLb9O9FWCaGCYi2Bl76sGGZw1T  #连接秘钥，替换成自己的
-  onsAddr: http://MQ_INST_1297517832308950_Bceo8QWE.mq-internet-access.mq-internet.aliyuncs.com:80  #生产者ons接入域名，替换成自己的
+  msgTopic: add-activity #生产主题
+  accessKey: LTAI4Fsk3ufKP5w3LN61QHhp  #连接通道
+  secretKey: zAGppLb9O9FWCaGCYi2Bl76sGGZw1T  #连接秘钥
+  onsAddr: http://MQ_INST_1297517832308950_BcgfHYIU.cn-shanghai.mq-internal.aliyuncs.com:8080  #生产者ons接入域名
+  #dev http://MQ_INST_1297517832308950_Bceo8QWE.mq-internet-access.mq-internet.aliyuncs.com:80
+  #prod http://MQ_INST_1297517832308950_BcgfHYIU.cn-shanghai.mq-internal.aliyuncs.com:8080

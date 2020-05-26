@@ -22,6 +22,12 @@ public class Sprint {
     @Column(name = "project_id")
     private String projectId;
 
+    @Column(name = "creator_id")
+    private String creatorId;
+
+    @Column(name = "team_id")
+    private String teamId;
+
     /**
      * 标题
      */

@@ -46,7 +46,7 @@ public class RocketMQConsumer {
         properties.setProperty(PropertyKeyConst.NAMESRV_ADDR, ONSAddr);
         consumer = ONSFactory.createConsumer(properties);
         consumer.subscribe(msgTopic, "*", new AddActivityListener());//监听第一个topic，new对应的监听器
-        // 在发送消息前，必须调用start方法来启动consumer，只需调用一次即可，当项目关闭时，自动shutdown
+        //        // 在发送消息前，必须调用start方法来启动consumer，只需调用一次即可，当项目关闭时，自动shutdown
         consumer.start();
 
     }

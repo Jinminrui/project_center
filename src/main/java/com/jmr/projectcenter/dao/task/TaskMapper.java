@@ -25,4 +25,8 @@ public interface TaskMapper extends Mapper<Task> {
     Integer countFinishedTaskByMember(
             @Param(value = "projectId") String projectId,
             @Param(value = "executor") String executor);
+
+    Integer getAllStoryPoints(@Param(value = "sprint") String sprint);
+
+    Integer getFinishedStoryPoints(@Param(value = "sprint") String sprint, @Param(value = "finishTime") String finishTime);
 }

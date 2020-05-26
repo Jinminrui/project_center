@@ -5,6 +5,7 @@ import com.jmr.projectcenter.auth.CheckLogin;
 import com.jmr.projectcenter.domain.dto.CommonResponseDTO;
 import com.jmr.projectcenter.domain.dto.task.AnalyseTaskByExecutorDTO;
 import com.jmr.projectcenter.domain.dto.task.BugAccumulativeTrend;
+import com.jmr.projectcenter.domain.dto.task.BurnDownDTO;
 import com.jmr.projectcenter.domain.dto.task.TaskDTO;
 import com.jmr.projectcenter.domain.dto.user.User;
 import com.jmr.projectcenter.domain.entity.task.Task;
@@ -20,8 +21,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.annotation.RequestScope;
 
 import javax.validation.Valid;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -183,6 +186,17 @@ public class TaskController {
             @RequestParam(value = "interval") Integer interval) {
         List<BugAccumulativeTrend> result = taskService.analyseBugAccumulativeTrend(projectId, sprintId, interval);
         return CommonResponseDTO.<List<BugAccumulativeTrend>>builder()
+                .code(200)
+                .data(result)
+                .build();
+    }
+
+    @GetMapping("/analyseBurnDown")
+    public CommonResponseDTO<List<BurnDownDTO>> analyseBurnDown(
+            @RequestParam(value = "sprintId") String sprintId
+    ) throws ParseException {
+        List<BurnDownDTO> result = taskService.analyseBurnDown(sprintService.findById(sprintId));
+        return CommonResponseDTO.<List<BurnDownDTO>>builder()
                 .code(200)
                 .data(result)
                 .build();

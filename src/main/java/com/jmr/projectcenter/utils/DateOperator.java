@@ -59,9 +59,20 @@ public class DateOperator {
         return pastDaysList;
     }
 
+    public static String parseDate(Date date) {
+        return sdf.format(date);
+    }
+
+    public static Date parseString(String date) throws ParseException { return  sdf.parse(date); }
+
+    public static Integer getGapDays(Date date, Date start) {
+        long gap = (date.getTime() - start.getTime()) / (1000L*3600L*24L);
+        return Integer.parseInt(String.valueOf(gap));
+    }
+
 
     public static void main(String[] args) throws ParseException {
-        List<String> dates = getIntervalDates((7));
-        System.out.println(dates.toString());
+        Integer gap = getGapDays(new Date(), parseString("2020-04-11"));
+        System.out.println(gap);
     }
 }
